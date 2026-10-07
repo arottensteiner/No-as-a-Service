@@ -57,7 +57,3 @@ python3 -m pydoc ./no_as_a_service.py
 ## Notes
 
 This uses Python's built-in development server, which is great for fun and small projects. For heavy traffic, put it behind a proper WSGI/ASGI server or reverse proxy.
-
-## License
-
-Choose a license for your repo (for example [MIT](https://choosealicense.com/licenses/mit/)) and add a `LICENSE` file.
