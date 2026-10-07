@@ -7,8 +7,8 @@ Usage:
     python no_as_a_service.py 5000       # custom port
 
 Endpoints (GET only):
-    /        ->  No
-    /<any>   ->  No
+    /        ->  random "no" phrase
+    /<any>   ->  random "no" phrase
     /docs    ->  this documentation
 
 Query it:
@@ -16,19 +16,28 @@ Query it:
     curl http://localhost:8000/docs
 """
 
+import random
 import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 HOST = "0.0.0.0"
 DEFAULT_PORT = 8000
-ANSWER = "No"
+ANSWERS = [
+    "No",
+    "Nope",
+    "Not a chance",
+    "Absolutely not",
+    "No way",
+    "Negative",
+    "Nope, sorry",
+]
 
 
 class NoHandler(BaseHTTPRequestHandler):
-    """Responds to GET /docs with the usage docs, and to any other path with "No"."""
+    """Responds to GET /docs with the usage docs, and to any other path with a random "no"."""
 
     def do_GET(self):
-        text = __doc__ if self.path.rstrip("/") == "/docs" else ANSWER
+        text = __doc__ if self.path.rstrip("/") == "/docs" else random.choice(ANSWERS)
         body = (text.strip() + "\n").encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/plain; charset=utf-8")
