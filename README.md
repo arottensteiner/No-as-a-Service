@@ -1,6 +1,6 @@
 # No-as-a-Service
 
-A tiny HTTP API that answers every request with one word: **No.**
+A tiny HTTP API that answers every request with a random way of saying **no**.
 
 Pure Python standard library. One file, zero dependencies.
 
@@ -27,7 +27,23 @@ curl http://localhost:8000/
 ```
 
 ```
-No
+Not a chance
+```
+
+Each request gets a randomly picked phrase from the built-in list:
+
+- No
+- Nope
+- Not a chance
+- Absolutely not
+- No way
+- Negative
+- Nope, sorry
+
+The usage docs are served at `/docs`:
+
+```bash
+curl http://localhost:8000/docs
 ```
 
 ## Endpoints
@@ -36,15 +52,19 @@ Only `GET` requests are handled.
 
 | Path     | Response               |
 |----------|------------------------|
-| `/`      | `No`                   |
-| `/<any>` | `No`                   |
+| `/`      | Random "no" phrase     |
+| `/<any>` | Random "no" phrase     |
 | `/docs`  | Usage documentation    |
 
-All responses are `200 OK` with `Content-Type: text/plain; charset=utf-8`.
+All responses are `200 OK` with `Content-Type: text/plain; charset=utf-8` and a `Content-Length` header. `/docs/` (with a trailing slash) also returns the docs.
 
 ## How it works
 
-`NoHandler` extends `http.server.BaseHTTPRequestHandler` and implements `do_GET`. It returns the module docstring for `/docs` and `"No"` for everything else. `main()` starts an `HTTPServer` and shuts it down cleanly on `Ctrl+C`.
+`NoHandler` extends `http.server.BaseHTTPRequestHandler` and implements `do_GET`. It returns the module docstring for `/docs` and `random.choice(ANSWERS)` for everything else. `main()` starts an `HTTPServer` and shuts it down cleanly on `Ctrl+C`.
+
+## Customizing the answers
+
+Edit the `ANSWERS` list at the top of `no_as_a_service.py` to add or remove phrases. Every entry has the same chance of being returned.
 
 ## Reading the docs
 
