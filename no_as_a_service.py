@@ -1,4 +1,4 @@
-"""No-as-a-Service (NaaS): a tiny HTTP API that always answers "No".
+"""No-as-a-Service (NaaS): a tiny HTTP API that always says no, in a random way.
 
 Uses only the Python standard library.
 
